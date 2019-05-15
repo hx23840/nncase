@@ -382,6 +382,19 @@ namespace NnCase.Converter.Converters
             return layer;
         }
 
+        private Layer ConvertReLU(LayerParameter layerParam)
+        {
+            var input = _outputs[layerParam.Bottom[0]];
+            var param = layerParam.ReluParam;
+
+            if (param != null && param.NegativeSlope != 0)
+                throw new NotSupportedException("Non zero negative slope of relu is not supported.");
+            var layer = new Relu(input.Dimensions);
+            layer.Input.SetConnection(input);
+            _outputs[layerParam.Top[0]] = layer.Output;
+            return layer;
+        }
+        
         private Layer ConvertMean(tflite.Operator op)
         {
             var inputs = op.GetInputsArray();
