@@ -91,6 +91,8 @@ namespace NnCase.Converter.Converters
                     return ConvertResizeNearestNeighbor(op);
                 case tflite.BuiltinOperator.LEAKY_RELU:
                     return ConvertLeakyRelu(op);
+                case tflite.BuiltinOperator.RELU:
+                    return ConvertReLU(layerParam);
                 case tflite.BuiltinOperator.MEAN:
                     return ConvertMean(op);
                 case tflite.BuiltinOperator.RESHAPE:
